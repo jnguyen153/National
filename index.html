@@ -8,7 +8,7 @@
   <style>
     body {
       margin: 0;
-      background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+      background: url('b.jpg') center/cover no-repeat;
       font-family: 'Great Vibes', cursive;
       height: 100vh;
       overflow: hidden;
@@ -16,6 +16,26 @@
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    /* Gradient Overlay (animated) */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,154,158,0.5), rgba(250,208,196,0.5), rgba(251,194,235,0.5), rgba(161,140,209,0.5));
+      background-size: 400% 400%;
+      animation: gradientMove 12s ease infinite;
+      z-index: 0;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     /* Popup Modal */
@@ -56,6 +76,7 @@
       font-size: 24px;
       animation: floatUp 5s linear infinite;
       opacity: 0.8;
+      z-index: 5;
     }
 
     @keyframes floatUp {
@@ -72,7 +93,7 @@
     /* Random side images */
     .random-photo {
       position: absolute;
-      width: 80px;
+      width: 200px;
       opacity: 0.9;
       border-radius: 15px;
       transition: transform 0.5s;
@@ -82,20 +103,53 @@
     .random-photo:hover {
       transform: scale(1.1);
     }
+
+    /* Play/Pause Button */
+    #music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 50%;
+      background: #e91e63;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition: background 0.3s;
+    }
+
+    #music-btn:hover {
+      background: #d81b60;
+    }
   </style>
 </head>
 <body>
-  <!-- Random scattered images (replace URLs or use local images) -->
-  <img src="https://i.imgur.com/1Xr8JXG.png" class="random-photo" style="top:10%; left:5%;">
-  <img src="https://i.imgur.com/2QnLzRz.png" class="random-photo" style="top:40%; left:2%;">
-  <img src="https://i.imgur.com/N3Z0v1o.png" class="random-photo" style="top:70%; left:3%;">
-  <img src="https://i.imgur.com/3w7nYpd.png" class="random-photo" style="top:20%; right:5%;">
-  <img src="https://i.imgur.com/yGRxjhc.png" class="random-photo" style="top:60%; right:8%;">
+  <!-- Background Music -->
+  <audio id="bg-music" autoplay loop>
+    <source src="song.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Play/Pause Toggle Button -->
+  <button id="music-btn">🎵</button>
+
+  <!-- Random scattered images -->
+  <img src="im13.jpg" class="random-photo" style="top:3%; left:10%;">
+  <img src="img2.jpg" class="random-photo" style="top:33%; left:7%;">
+  <img src="img3.jpg" class="random-photo" style="top:63%; left:8%;">
+  <img src="im11.jpg" class="random-photo" style="top:10%; right:5%; width: 250px;">
+  <img src="im14.jpg" class="random-photo" style="top:50%; right:8%; width: 250px;">  
 
   <!-- Popup Content -->
   <div class="popup" id="popup">
-    <h1>Happy Birthday, My Love! ❤️</h1>
-    <p>Wishing you endless joy and love on your special day.</p>
+    <h1>Happy National Girlfriend's Day Jaimie Sansouci! ❤️</h1>
+    <p>Happy national gfs day baby! I’m so blessed to have you as my gf. You are always so pretty, inside and out, in my eyes, and I love you so much knowing everything about you including your insecurities. You have nothing to worry about your insecurities because not only that i don’t judge you for them, I think that you give urself too little credit and forget that you are the most beautiful girl in the world. Whatever your other insecurities may be as well I’m sure it’s not true because You are the best person I’ve ever met and I know I want to be able to spend the rest of my life with you. You're so thoughtful, caring, funny, loving and hardworking. I’m sorry that we didn’t get to do anything for national gfs day and our 7 months because of my eye surgery. I would want to plan something everyday and spend time with you if I could. Because spending time with you are the happiest times of my life. Again I’m so thankful for meeting you and all the memories and experiences we madr with eachother so far. </p>
   </div>
 
   <script>
@@ -106,6 +160,20 @@
         createHearts();
       }, 1000);
     };
+
+    // Play/Pause toggle for music
+    const music = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-btn');
+
+    musicBtn.addEventListener('click', function () {
+      if (music.paused) {
+        music.play();
+        musicBtn.textContent = '🎵'; // Show pause icon
+      } else {
+        music.pause();
+        musicBtn.textContent = '🎵'; // Show play icon
+      }
+    });
 
     // Create floating hearts
     function createHearts() {
@@ -118,10 +186,7 @@
         heart.style.fontSize = (20 + Math.random() * 20) + 'px';
         document.body.appendChild(heart);
 
-        // Remove heart after animation
-        setTimeout(() => {
-          heart.remove();
-        }, 5000);
+       
       }
     }
   </script>
